@@ -13,15 +13,15 @@ class Board:
 
     def get_fitness(self):
         fit = 0
-        for i in range(self.n_queen):
-            for j in range(self.n_queen):
+        for i in range(self.n_queen):   # i represents row index
+            for j in range(self.n_queen):   # j represents column index
                 if self.map[i][j] == 1:
                     for k in range(1, self.n_queen - i):
-                        if self.map[i + k][j] == 1:
+                        if self.map[i + k][j] == 1:  # checking vertical (straight down)
                             fit += 1
-                        if j - k >= 0 and self.map[i + k][j - k] == 1:
+                        if j - k >= 0 and self.map[i + k][j - k] == 1:  # checking diagonal (down + left)
                             fit += 1
-                        if j + k < self.n_queen and self.map[i + k][j + k] == 1:
+                        if j + k < self.n_queen and self.map[i + k][j + k] == 1:  # checking diagonal (down + right)
                             fit += 1
         return fit
 
