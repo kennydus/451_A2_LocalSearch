@@ -1,5 +1,9 @@
 import random
 import numpy as np
+from hill import *
+from genetic import *
+import time
+
 
 
 class Board:
@@ -36,6 +40,8 @@ class Board:
 
 
 if __name__ == '__main__':
-    test = Board(5)
+    test = Board(20)
     print(test.get_fitness())
     test.show_map()
+    hill_climb(test)
+
