@@ -1,7 +1,7 @@
 import time
 
 
-def hill_climb(board):
+def hill_climb(board, bool_print):
     start_time = time.time_ns()
     # Initializing variables
     best_fitness = board.get_fitness()
@@ -30,15 +30,16 @@ def hill_climb(board):
         if best_fitness != 0:
             board.__init__(board.n_queen)
 
-    # Convert running time from ns to milliseconds.
-    running_time = (time.time_ns() - start_time) / (10**6)
-    print(f'Running time: {round(running_time)} ms')
+    if bool_print:
+        # Convert running time from ns to milliseconds.
+        running_time = (time.time_ns() - start_time) / (10**6)
+        print(f'Running time: {round(running_time)} ms')
 
-    # Printing out the completed board
-    for i in range(board.n_queen):
-        for j in range(board.n_queen):
-            if board.map[i][j] == 1:
-                print(1, end=' ')
-            else:
-                print('- ', end='')
-        print('\n')
+        # Printing out the completed board
+        for i in range(board.n_queen):
+            for j in range(board.n_queen):
+                if board.map[i][j] == 1:
+                    print(1, end=' ')
+                else:
+                    print('- ', end='')
+            print('\n')
