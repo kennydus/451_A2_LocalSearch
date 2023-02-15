@@ -31,15 +31,15 @@ def genetic(boards):
         non_attacking_pairs.append(total_pairs - board.get_fitness())
 
         initial_populations.append(q_string)
-        print(q_string)
 
-    print(initial_populations)
+    print('initial_populations:', initial_populations)
 
     # Probability of each board being chosen for reproducing.
     choose_prob = []
     for num_pairs in non_attacking_pairs:
-        choose_prob.append(num_pairs / sum(non_attacking_pairs))
-    print(choose_prob)
+        choose_prob.append(round(num_pairs / sum(non_attacking_pairs), 5))
+
+    print(f'choose_prob: {choose_prob}')
 
     # Selections contains the strings chosen for reproduction.
     selections = []
@@ -61,7 +61,7 @@ def genetic(boards):
             selections.append(initial_populations[6])
         else:
             selections.append(initial_populations[7])
-    print(selections)
+    print('selections:\t', selections)
 
     cross_over = []
     for i in range(0, 8, 2):
@@ -70,4 +70,4 @@ def genetic(boards):
         temp = selections[i][:cross_point]
         cross_over.append(selections[i][:cross_point] + selections[i+1][cross_point:])
         cross_over.append(selections[i+1][:cross_point] + selections[i][cross_point:])
-    print(cross_over)
+    print('crossover:\t', cross_over)
