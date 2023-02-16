@@ -38,17 +38,43 @@ class Board:
         else:
             self.map[i][j] = 0
 
+    # Remake the boards so that there are only 1 queen per column. Used for genetic algorithm.
+    def remake_genetic(self):
+        self.map = [[0 for _ in range(5)] for _ in range(5)]
+        for column in range(5):
+            row = random.randint(0, 4)
+            self.map[row][column] = 1
+
+    # Returns number of attacking pairs.
+    # Starting from leftmost column, checks for queens in
+    # diagonal and horizontal plane towards the right side.
+    def get_genetic_fitness(self):
+        fit = 0
+        for i in range(self.n_queen):  # i represents column index
+            for j in range(self.n_queen):  # j represents row index  [row][column]
+                if self.map[j][i] == 1:  # if we found the queen in the current column
+                    for k in range(1, self.n_queen - i):
+                        if self.map[j][i + k] == 1:  # checking horizontal (right side)
+                            fit += 1
+                        if j - k >= 0 and self.map[j - k][i + k] == 1:  # checking diagonal (up + right)
+                            fit += 1
+                        if j + k < self.n_queen and self.map[j + k][i + k] == 1:  # checking diagonal (down + right)
+                            fit += 1
+        return fit
+
 
 if __name__ == '__main__':
-    test = Board(8)
+    test = Board(5)
     print(test.get_fitness())
     test.show_map()
-    hill_climb(test, True)
+    print('\n=== Running Hill Climb ===\n')
+    hill_climb(board=test)
 
     boards = []
     for i in range(8):
         temp = Board(5)
-        hill_climb(temp, False)
+        temp.remake_genetic()
         boards.append(temp)
+    print('\n=== Running Genetic ===\n')
 
     genetic(boards)
