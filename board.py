@@ -1,7 +1,9 @@
+import copy
 import random
 import numpy as np
 from hill import *
 from genetic import *
+from genetic_recursive import *
 import time
 
 
@@ -76,5 +78,7 @@ if __name__ == '__main__':
         temp.remake_genetic()
         boards.append(temp)
     print('\n=== Running Genetic ===\n')
-
+    recursive_boards = copy.deepcopy(boards)
     genetic(boards)
+    # genetic_recursive(recursive_boards, iteration=0, start_time=time.time_ns())
+

@@ -46,16 +46,10 @@ def genetic(boards):
 
             non_attacking_pairs.append(total_pairs - board.get_genetic_fitness())
 
-        # print('initial_population:\t', initial_population)
-
         # Probability of each board being chosen for reproducing.
         choose_prob = []
         for num_pairs in non_attacking_pairs:
             choose_prob.append(num_pairs / sum(non_attacking_pairs))
-
-        # print('choose_prob:', choose_prob)
-        # print(f'non-atk prs:\t\t {non_attacking_pairs}')
-        # print(f'non-atk prs: {sum(non_attacking_pairs)}')
 
         # Parents contains the strings chosen for reproduction.
         parents = []
@@ -77,7 +71,6 @@ def genetic(boards):
                 parents.append(initial_population[6])
             else:
                 parents.append(initial_population[7])
-        # print('parents:\t\t\t', parents)
 
         # Children contains the strings after crossover stage.
         children = []
@@ -86,7 +79,6 @@ def genetic(boards):
             cross_point = random.randint(1, 3)
             children.append(parents[i][:cross_point] + parents[i + 1][cross_point:])
             children.append(parents[i + 1][:cross_point] + parents[i][cross_point:])
-        # print('children:\t', children)
 
         mutated_children = []
         for index in range(len(children)):
@@ -101,7 +93,6 @@ def genetic(boards):
                     children[index][:mut_index] + str(mut_position) + children[index][mut_index + 1:])
             else:
                 mutated_children.append(children[index])
-        # print(f'mutated_children:\t {mutated_children}')
 
         # Reset boards to zero, and create ones that match the strings from mutation list.
         for board in boards:
@@ -114,6 +105,19 @@ def genetic(boards):
 
         iteration += 1
 
+
+        print('initial_population:\t', initial_population)
+        print('choose_prob:\t\t', end=' ')
+        rounded_probs = []
+        for prob in choose_prob:
+            rounded_probs.append('{:.3f}'.format(round(prob, 5)))
+        print(rounded_probs)
+
+        print(f'non-attack pairs:\t {non_attacking_pairs}')
+        print('parents:\t\t\t', parents)
+        print('children:\t\t\t', children)
+        print(f'mutated_children:\t {mutated_children}\n')
+
         # Test fitness of each board
         for i in range(len(boards)):
             if boards[i].get_genetic_fitness() == 0:
@@ -122,4 +126,3 @@ def genetic(boards):
                 print(f'Running time: {round(running_time)}ms')
                 output_board(boards[i])
                 return boards[i]
-
